@@ -3,7 +3,7 @@ const devices = require('../models/device')
 
 
 const test = async (req, res) => {
-    res.render('home')
+    res.render('device')
 }
 
 module.exports = {
