@@ -72,6 +72,7 @@ const deleteDevice = async (req, res) => {
             if (err && err.code == 'ENOENT') {
                 // Lỗi tìm không thấy tệp, tệp không tồn tại.
                 console.info("File doesn't exist, won't remove it.");
+                res.status(200).send()
             } else if (err) {
                 // Đã xảy ra lỗi khi xóa tệp
                 console.error("Error occurred while trying to remove file");
@@ -113,6 +114,7 @@ const updateDevice = async (req, res) => {
                     price: req.body.price,
                     quantity: req.body.quantity,
                     supplierName: req.body.supplier,
+                   
                 }
             }, (err, docs) => {
                 if (err) {
