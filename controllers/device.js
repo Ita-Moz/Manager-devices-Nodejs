@@ -130,7 +130,17 @@ const updateDevice = async (req, res) => {
 // Hàm search thiết bị theo Name
 
 const searchDevice = async (req, res) => {
-
+    try {
+        let allSearch = await devices.find({ deviceName: { $regex: req.params.name } }).sort('quantity');
+        if (allSearch.length == 0) {
+            res.send("Thiết bị không tồn tại!!!");
+        } else {
+            return res.status(200).render('search-device', { list: allSearch });
+        }
+    }
+    catch (err) {
+        return err;
+    }
 }
 
 module.exports = {

@@ -98,24 +98,61 @@ $(document).ready(() => {
       console.log("404");
     }
   });
+
   // search
   $('.search-bar').blur(() => {
     let txtsearch = $('.search-bar').val();
     $.ajax({
-        type: 'GET',
-        url: 'http://localhost:5000/DeviceManager/search/' + txtsearch,
-        success: function(response) {
-            $('.products-row').hide('div')
-            $("div#addRowSeach").html(response);
-      
-        },
-        error: function(err) {
-            console.log(err);
-        }
+      type: 'GET',
+      url: 'http://localhost:5000/DeviceManager/search/' + txtsearch,
+      success: function (response) {
+        $('.products-row').hide('div')
+        $("div#addRowSeach").html(response);
+
+        //
+        $('button.btn_delete').click(function () {
+          const id = $(this).attr('data-id');
+          const image = $(this).attr('data-image');
+
+          if (confirm("Bạn có chắc chắn muốn xoá sản phẩm này - " + id) == true) {
+            $.ajax({
+              type: 'DELETE',
+              url: 'http://localhost:5000/DeviceManager/delete-device/' + id + "/" + image,
+              success: function (response) {
+                $('.delete-row' + id).remove('div')
+                alert("Xoá thành công ")
+              },
+              error: function (err) {
+                console.log(err);
+              }
+            });
+          } else {
+            console.log("404")
+          }
+        })
+        //
+        $("button.btn_edit").click(function (event) {
+          $('div#myModalEdit').modal('show');
+          const id = $(this).attr("data-id");
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:5000/DeviceManager/find-val-update/" + id,
+            success: function (response) {
+              $('#btnSave').attr("data-id", response._id)
+              $('#editName').val(response.deviceName)
+              $('#editCategory').val(response.category)
+              $('#editQuantity').val(response.quantity)
+              $('#editPrice').val(response.price)
+              $('#editSupplier').val(response.supplierName)
+            }
+          });
+        })
+      },
+      error: function (err) {
+        console.log(err);
+      }
     });
-
-
-})
+  })
 
 
 
