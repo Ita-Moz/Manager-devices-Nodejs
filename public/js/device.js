@@ -29,6 +29,7 @@ $(document).ready(() => {
   $('#btnAddDevice').click(function () {
     $('#myModalAddDevice').modal('show');
   })
+
   //Delete device
   $('button.btn_delete').click(function () {
     const id = $(this).attr('data-id');
@@ -65,6 +66,9 @@ $(document).ready(() => {
         $('#editQuantity').val(response.quantity)
         $('#editPrice').val(response.price)
         $('#editSupplier').val(response.supplierName)
+        let linkImg = '../public/image/' + response.image;
+        $('#showImage').val(response.image);
+        $('#showImage').attr('src', linkImg);
       }
     });
   })
