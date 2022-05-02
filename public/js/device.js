@@ -82,6 +82,7 @@ $(document).ready(() => {
       quantity: $("#editQuantity").val(),
       price: $("#editPrice").val(),
       supplier: $("#editSupplier").val(),
+      image: $("#editImage").attr('id')
     
     }
     if (confirm("Bạn có chắc chắn muốn cập nhật thiết bị này - " + id) == true) {

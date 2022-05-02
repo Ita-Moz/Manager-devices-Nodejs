@@ -11,7 +11,8 @@ var storage = multer.diskStorage({
         cb(null, Date.now() + "-" + file.originalname)
     }
 });
-var upload = multer({
+
+const upload = multer({
     storage: storage,
     limits: {
         fieldNameSize: 300,
@@ -21,7 +22,8 @@ var upload = multer({
         console.log(file);
         cb(null, true)
     }
-}).single("txtImage");
+});
+
 
 //Hiển thị tất cả các thiết bị
 const showInfo = async (req, res) => {
@@ -35,13 +37,7 @@ const showInfo = async (req, res) => {
 }
 // Hàm add device
 const addDevice = async (req, res) => {
-    await upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            console.log("Error when uploading.");
-        } else if (err) {
-            console.log("An unknown error " + err);
-        } else {
-            var name = req.body.txtNameDevice
+    var name = req.body.txtNameDevice
             devices.create({
                 deviceName: name.charAt(0).toUpperCase() + name.slice(1),
                 image: req.file.filename,
@@ -56,9 +52,6 @@ const addDevice = async (req, res) => {
                 .catch((err) => {
                     console.log(err)
                 })
-        }
-
-    });
 }
 
 // Hàm xử lí xoá sản phẩm và xoá file ảnh của sản phẩm bên server
@@ -67,8 +60,7 @@ const deleteDevice = async (req, res) => {
         await devices.deleteMany({ _id: req.params.id })
         // GỠ FILE TRÊN SERVER
         let path = `./public/image/${req.params.image}`
-        fs.unlink(path, function (err) {
-
+        fs.unlink(path, await function (err) {
             if (err && err.code == 'ENOENT') {
                 // Lỗi tìm không thấy tệp, tệp không tồn tại.
                 console.info("File doesn't exist, won't remove it.");
@@ -76,15 +68,15 @@ const deleteDevice = async (req, res) => {
             } else if (err) {
                 // Đã xảy ra lỗi khi xóa tệp
                 console.error("Error occurred while trying to remove file");
+                res.status(200).send()
             } else {
                 console.info(`Đã xoá 1 ảnh trong server`);
             }
         });
-
         return await res.status(200).send();
     }
     catch (err) {
-        return res.json(err);
+        return res.status(404).json(err);
     }
 }
 // Hàm truyền giá trị vào modal
@@ -99,34 +91,31 @@ const valUpdate = async (req, res) => {
 }
 // Hàm update device
 const updateDevice = async (req, res) => {
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            console.log("Error when uploading.");
-        } else if (err) {
-            console.log("An unknown error " + err);
-        } else {
-            var name = req.body.name
-            devices.findOneAndUpdate({ _id: req.params.id }, {
+    var name = req.body.name;
+    if (req.file) {
+        const image = req.file.filename;
+        devices.image = image;
+    }else{
+        console.error("Khong hoat dong")
+    }
 
-                $set: {
-                    deviceName: name.charAt(0).toUpperCase() + name.slice(1),
-                    category: req.body.category,
-                    price: req.body.price,
-                    quantity: req.body.quantity,
-                    supplierName: req.body.supplier,
-                   
-                }
-            }, (err, docs) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.status(200).send();
-                    console.log("Updated User : ", docs);
-                }
-            });
+    devices.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            deviceName: name.charAt(0).toUpperCase() + name.slice(1),
+            category: req.body.category,
+            price: req.body.price,
+            quantity: req.body.quantity,
+            supplierName: req.body.supplier,
         }
-
+    }, (err, docs) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).send();
+            console.log("Updated User : ", docs);
+        }
     });
+
 }
 
 // Hàm search thiết bị theo Name
@@ -151,5 +140,6 @@ module.exports = {
     deleteDevice,
     valUpdate,
     updateDevice,
-    searchDevice
+    searchDevice,
+    upload,
 }
