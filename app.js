@@ -20,7 +20,7 @@ app.use('/public',express.static(__dirname + '/public'));
 
 //body-parser
 app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //views engine
 app.set('view engine', 'ejs');

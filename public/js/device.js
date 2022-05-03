@@ -1,7 +1,10 @@
 $(document).ready(() => {
-  document.querySelector(".jsFilter").addEventListener("click", function () {
+  $('.jsFilter').hover(function () {
     document.querySelector(".filter-menu").classList.toggle("active");
-  });
+
+  }, function () {
+  }
+  );
 
   document.querySelector(".grid").addEventListener("click", function () {
     document.querySelector(".list").classList.remove("active");
@@ -24,7 +27,49 @@ $(document).ready(() => {
     document.documentElement.classList.toggle("light");
     modeSwitch.classList.toggle("active");
   });
+  //Khối chức năng update và deleted
+  function block1() {
+    $('button.btn_delete').click(function () {
+      const id = $(this).attr('data-id');
+      const image = $(this).attr('data-image');
 
+      if (confirm("Bạn có chắc chắn muốn xoá sản phẩm này - " + id) == true) {
+        $.ajax({
+          type: 'DELETE',
+          url: 'http://localhost:5000/DeviceManager/delete-device/' + id + "/" + image,
+          success: function (response) {
+            $('.delete-row' + id).remove('div')
+            alert("Xoá thành công ")
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      } else {
+        console.log("404")
+      }
+    })
+    //
+    $("button.btn_edit").click(function (event) {
+      $('div#myModalEdit').modal('show');
+      const id = $(this).attr("data-id");
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:5000/DeviceManager/find-val-update/" + id,
+        success: function (response) {
+          $('#btnSave').attr("data-id", response._id)
+          $('#editName').val(response.deviceName)
+          $('#editCategory').val(response.category)
+          $('#editQuantity').val(response.quantity)
+          $('#editPrice').val(response.price)
+          $('#editSupplier').val(response.supplierName)
+          let linkImg = '../public/image/' + response.image;
+          $('#showImage').val(response.image);
+          $('#showImage').attr('src', linkImg);
+        }
+      });
+    })
+  }
   //Open modal add Device
   $('#btnAddDevice').click(function () {
     $('#myModalAddDevice').modal('show');
@@ -82,8 +127,7 @@ $(document).ready(() => {
       quantity: $("#editQuantity").val(),
       price: $("#editPrice").val(),
       supplier: $("#editSupplier").val(),
-      image: $("#editImage").attr('id')
-    
+
     }
     if (confirm("Bạn có chắc chắn muốn cập nhật thiết bị này - " + id) == true) {
       $.ajax({
@@ -114,45 +158,8 @@ $(document).ready(() => {
       success: function (response) {
         $('.products-row').hide('div')
         $("div#addRowSeach").html(response);
+        block1()
 
-        //
-        $('button.btn_delete').click(function () {
-          const id = $(this).attr('data-id');
-          const image = $(this).attr('data-image');
-
-          if (confirm("Bạn có chắc chắn muốn xoá sản phẩm này - " + id) == true) {
-            $.ajax({
-              type: 'DELETE',
-              url: 'http://localhost:5000/DeviceManager/delete-device/' + id + "/" + image,
-              success: function (response) {
-                $('.delete-row' + id).remove('div')
-                alert("Xoá thành công ")
-              },
-              error: function (err) {
-                console.log(err);
-              }
-            });
-          } else {
-            console.log("404")
-          }
-        })
-        //
-        $("button.btn_edit").click(function (event) {
-          $('div#myModalEdit').modal('show');
-          const id = $(this).attr("data-id");
-          $.ajax({
-            type: "GET",
-            url: "http://localhost:5000/DeviceManager/find-val-update/" + id,
-            success: function (response) {
-              $('#btnSave').attr("data-id", response._id)
-              $('#editName').val(response.deviceName)
-              $('#editCategory').val(response.category)
-              $('#editQuantity').val(response.quantity)
-              $('#editPrice').val(response.price)
-              $('#editSupplier').val(response.supplierName)
-            }
-          });
-        })
       },
       error: function (err) {
         console.log(err);
@@ -160,6 +167,23 @@ $(document).ready(() => {
     });
   })
 
-
+  // Filter
+  $('button.filter-button.apply').click(function () {
+    var category = $('#filterCategory').val();
+    var price = $('#filterPrice').val();
+    $.ajax({
+      type: "get",
+      url: "http://localhost:5000/DeviceManager/filter/" + category + "/" + price,
+      success: function (response) {
+        $('.products-row').hide('div')
+        $("div#addRowSeach").html(response);
+        $('.filter-menu').toggleClass('active');       
+        block1()
+      },
+      error: function (err) {
+        console.log(err);
+      }
+    });
+  })
 
 })

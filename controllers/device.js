@@ -38,20 +38,20 @@ const showInfo = async (req, res) => {
 // Hàm add device
 const addDevice = async (req, res) => {
     var name = req.body.txtNameDevice
-            devices.create({
-                deviceName: name.charAt(0).toUpperCase() + name.slice(1),
-                image: req.file.filename,
-                category: req.body.txtCategory,
-                quantity: req.body.txtQuantity,
-                price: req.body.txtPrice,
-                supplierName: req.body.txtSupplier,
-            })
-                .then(() => {
-                    res.redirect("http://localhost:5000/DeviceManager")
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+    devices.create({
+        deviceName: name.charAt(0).toUpperCase() + name.slice(1),
+        image: req.file.filename,
+        category: req.body.txtCategory,
+        quantity: req.body.txtQuantity,
+        price: req.body.txtPrice,
+        supplierName: req.body.txtSupplier,
+    })
+        .then(() => {
+            res.redirect("http://localhost:5000/DeviceManager")
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 // Hàm xử lí xoá sản phẩm và xoá file ảnh của sản phẩm bên server
@@ -92,10 +92,11 @@ const valUpdate = async (req, res) => {
 // Hàm update device
 const updateDevice = async (req, res) => {
     var name = req.body.name;
+    //test update xem co nhan req.file ko
     if (req.file) {
         const image = req.file.filename;
         devices.image = image;
-    }else{
+    } else {
         console.error("Khong hoat dong")
     }
 
@@ -133,7 +134,26 @@ const searchDevice = async (req, res) => {
         return err;
     }
 }
-
+const filterDevice = async (req, res) => {
+    try {
+        let price = req.params.price
+        let filterDevice
+        if (price.trim() === "<=$50") {
+            filterDevice = await devices.find({ category: req.params.category, price: { $lte: 50 } });
+        } else if (price === "$50 - $100") {
+            filterDevice = await devices.find({ category: req.params.category, price: { $gte: 50, $lte: 100 } });
+        } else if (price === ">=$100 trở lên") {
+            filterDevice = await devices.find({ category: req.params.category, price: { $gt: 100 } });
+        }
+        if (filterDevice.length == 0) {
+            res.send("Thiết bị không tồn tại!!!");
+        } else {
+            return await res.status(200).render('search-device', { list: filterDevice });
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     showInfo,
     addDevice,
@@ -142,4 +162,5 @@ module.exports = {
     updateDevice,
     searchDevice,
     upload,
+    filterDevice
 }
