@@ -177,7 +177,7 @@ $(document).ready(() => {
       success: function (response) {
         $('.products-row').hide('div')
         $("div#addRowSeach").html(response);
-        $('.filter-menu').toggleClass('active');       
+        $('.filter-menu').toggleClass('active');   
         block1()
       },
       error: function (err) {
