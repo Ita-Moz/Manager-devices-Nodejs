@@ -144,6 +144,8 @@ const filterDevice = async (req, res) => {
             filterDevice = await devices.find({ category: req.params.category, price: { $gte: 50, $lte: 100 } });
         } else if (price === ">=$100 trở lên") {
             filterDevice = await devices.find({ category: req.params.category, price: { $gt: 100 } });
+        } else if (price === "--Choose--") {
+            filterDevice = await devices.find({ category: req.params.category});
         }
         if (filterDevice.length == 0) {
             res.send("Thiết bị không tồn tại!!!");

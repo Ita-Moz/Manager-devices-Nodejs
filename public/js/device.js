@@ -172,7 +172,7 @@ $(document).ready(() => {
     var category = $('#filterCategory').val();
     var price = $('#filterPrice').val();
     $.ajax({
-      type: "get",
+      type: "get", 
       url: "http://localhost:5000/DeviceManager/filter/" + category + "/" + price,
       success: function (response) {
         $('.products-row').hide('div')
