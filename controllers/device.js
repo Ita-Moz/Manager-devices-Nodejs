@@ -98,6 +98,7 @@ const updateDevice = async (req, res) => {
         devices.image = image;
     } else {
         console.error("Khong hoat dong")
+        //test update xem co hoat dong khong
     }
 
     devices.findOneAndUpdate({ _id: req.params.id }, {
