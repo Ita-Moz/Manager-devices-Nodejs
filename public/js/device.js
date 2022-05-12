@@ -148,23 +148,26 @@ $(document).ready(() => {
       console.log("404");
     }
   });
-
+  
   // search
-  $('.search-bar').blur(() => {
+  $('.search-bar').keypress((event) => {
     let txtsearch = $('.search-bar').val();
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost:5000/DeviceManager/search/' + txtsearch,
-      success: function (response) {
-        $('.products-row').hide('div')
-        $("div#addRowSeach").html(response);
-        block1()
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') {
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:5000/DeviceManager/search/' + txtsearch,
+        success: function (response) {
+          $('.products-row').hide('div')
+          $("div#addRowSeach").html(response);
+          block1()
 
-      },
-      error: function (err) {
-        console.log(err);
-      }
-    });
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });      
+    }
   })
 
   // Filter

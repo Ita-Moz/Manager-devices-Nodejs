@@ -36,6 +36,7 @@ $(document).ready(function () {
     } else if (checkAccount() == true && checkPassword() == true) {
       alert("Đăng nhập thành công");
       window.location = 'http://localhost:5000/DeviceManager'
+      
     }
   }
   
