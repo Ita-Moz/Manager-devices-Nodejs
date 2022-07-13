@@ -6,13 +6,13 @@ const devicesSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    price: {
-        type: Number
-    },
     category: {
         type: String
     },
     quantity: {
+        type: Number
+    },
+    price: {
         type: Number
     },
     supplierName: {

@@ -1,0 +1,55 @@
+<% list.forEach((element,index)=> { %>
+    <div class="products-row delete-row<%- element._id %>">
+        <button class="cell-more-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-more-vertical">
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="19" r="1" />
+            </svg>
+        </button>
+        <div class="product-cell1 image">
+            <img style="object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
+            width: 35%;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 10px" src="../public/image/<%- element.image  %> " alt="Image product" />
+            <span>
+                <%- element.deviceName %>
+            </span>
+        </div>
+        <div class="product-cell category">
+            <span class="cell-label">Quantity:</span>
+            <p id="txtmota">
+                <%- element.quantity %>
+            </p>
+        </div>
+        <div class="product-cell status-cell">
+            <span class="cell-label">Category:</span>
+            <span class="status active">
+                <%- element.category %>
+            </span>
+        </div>
+        <div class="product-cell stock">
+            <span class="cell-label">Supplier:</span>
+            <%- element.supplierName %>
+        </div>
+        <div class="product-cell price">
+            <span class="cell-label">Price:</span> $
+            <%- element.price %>
+        </div>
+        <div class="product-cell sales d-flex justify-content-around">
+            <span class="cell-label">Action:</span>
+            <button data-id="<%- element._id  %>" class="btn btn-primary btn_edit" data-toggle="modal"
+                data-target="#myModalEdit">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            <button data-id="<%- element._id  %>" data-image="<%- element.image  %>" class="btn btn-danger btn_delete">
+                <i class="bi bi-trash3"></i>
+            </button>
+        </div>
+    </div>
+    <% }) %>

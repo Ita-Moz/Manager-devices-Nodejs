@@ -1,6 +1,5 @@
 <%- include('main') %>
 
-
     <body>
         <div class="app-container">
             <div class="sidebar">
@@ -25,7 +24,7 @@
                         </a>
                     </li>
                     <li class="sidebar-list-item active">
-                        <a href="http://localhost:3000/Storey/dashboard">
+                        <a href="http://localhost:5000/DeviceManager">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="feather feather-shopping-bag">
@@ -33,11 +32,11 @@
                                 <line x1="3" y1="6" x2="21" y2="6" />
                                 <path d="M16 10a4 4 0 0 1-8 0" />
                             </svg>
-                            <span>Products</span>
+                            <span>Manager Devices</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-list-item ">
+                    <li class="sidebar-list-item">
                         <a href="http://localhost:3000/Storey/dashboard/quan-ly-user">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -87,7 +86,7 @@
                 <div class="account-info">
                     <div class="account-info-picture">
                         <img src="https://images.unsplash.com/photo-1527736947477-2790e28f3443?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTE2fHx3b21hbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60"
-                            alt="Account">
+                            alt="Account" />
                     </div>
                     <div class="account-info-name">ADMIN ♫</div>
                     <button class="account-info-more">
@@ -103,7 +102,7 @@
             </div>
             <div class="app-content">
                 <div class="app-content-header">
-                    <h1 class="app-content-headerText">Products</h1>
+                    <h1 class="app-content-headerText">Devices Information</h1>
                     <button class="mode-switch" title="Switch Theme">
                         <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
@@ -111,42 +110,38 @@
                             <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                         </svg>
                     </button>
-                    <button class="app-content-headerButton" id="btnAddProduct">Add
-                        Product</button>
+                    <button class="app-content-headerButton" id="btnAddDevice">
+                        Add Device
+                    </button>
                 </div>
 
                 <div class="app-content-actions">
-                    <input class="search-bar" placeholder="Search..." type="text">
+                    <input class="search-bar" placeholder="Search..." type="text" />
                     <div class="app-content-actions-wrapper">
                         <div class="filter-button-wrapper">
-                            <button class="action-button filter jsFilter"><span>Filter</span><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-filter">
+                            <button class="action-button filter jsFilter">
+                                <span>Filter</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter">
                                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-                                </svg></button>
+                                </svg>
+                            </button>
                             <div class="filter-menu">
-                                <label>Category</label>
-                                <select>
-                                    <option>All Categories</option>
-                                    <option>Furniture</option>
-                                    <option>Decoration</option>
-                                    <option>Kitchen</option>
-                                    <option>Bathroom</option>
+                                <label for="filterCategory">Category</label>
+                                <select id="filterCategory">
+                                    <option>Điện tử</option>
+                                    <option>Phụ kiện</option>
                                 </select>
-                                <label>Status</label>
-                                <select>
-                                    <option>All Status</option>
-                                    <option>Active</option>
-                                    <option>Disabled</option>
+                                <label for="filterPrice">Price</label>
+                                <select id="filterPrice">
+                                    <option>--Choose--</option>
+                                    <option>$50 - $100</option>
+                                    <option><=$50</option>
+                                    <option>>=$100 trở lên</option>
                                 </select>
                                 <div class="filter-menu-buttons">
-                                    <button class="filter-button reset">
-                                        Reset
-                                    </button>
-                                    <button class="filter-button apply">
-                                        Apply
-                                    </button>
+                                    <button class="filter-button reset">Reset</button>
+                                    <button class="filter-button apply">Apply</button>
                                 </div>
                             </div>
                         </div>
@@ -176,10 +171,9 @@
                 </div>
 
                 <div class="products-area-wrapper tableView">
-
                     <div class="products-header">
-                        <div class="product-cell image">
-                            Sản phẩm
+                        <div class="product-cell1 image">
+                            Device
                             <button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
@@ -187,184 +181,250 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="product-cell category">Mô tả<button class="sort-button">
+                        <div class="product-cell category">
+                            Quantity<button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
                                         d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" />
                                 </svg>
-                            </button></div>
-                        <div class="product-cell status-cell">Loại<button class="sort-button">
+                            </button>
+                        </div>
+                        <div class="product-cell status-cell">
+                            Category<button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
                                         d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" />
                                 </svg>
-                            </button></div>
-                        <div class="product-cell stock">Số lượng<button class="sort-button">
+                            </button>
+                        </div>
+                        <div class="product-cell stock">
+                            Supplier<button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
                                         d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" />
                                 </svg>
-                            </button></div>
-                        <div class="product-cell price">Price<button class="sort-button">
+                            </button>
+                        </div>
+                        <div class="product-cell price">
+                            Price<button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
                                         d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" />
                                 </svg>
-                            </button></div>
-                        <div class="product-cell sales">Hành động<button class="sort-button">
+                            </button>
+                        </div>
+                        <div class="product-cell sales">
+                            Action<button class="sort-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512">
                                     <path fill="currentColor"
                                         d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z" />
                                 </svg>
-                            </button></div>
+                            </button>
+                        </div>
                     </div>
                     <!-- add row search -->
-                    <div style="color:white;" id="addRowSeach"></div>
+                    <div style="color: white" id="addRowSeach"></div>
 
-                    
+                    <% devices.forEach((element,index)=> { %>
+                        <div class="products-row delete-row<%- element._id %>">
+                            <button class="cell-more-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-more-vertical">
+                                    <circle cx="12" cy="12" r="1" />
+                                    <circle cx="12" cy="5" r="1" />
+                                    <circle cx="12" cy="19" r="1" />
+                                </svg>
+                            </button>
+                            <div class="product-cell1 image">
+                                <img style="object-fit: contain;
+                                max-width: 100%;
+                                max-height: 100%;
+                                width: 30%;
+                                height: auto;
+                                border-radius: 10px;" src="../public/image/<%- element.image  %> " alt="Image product" />
+                                <span class="thugontxt">
+                                    <%- element.deviceName %>
+                                </span>
+                            </div>
+                            <div class="product-cell category">
+                                <span class="cell-label">Quantity:</span>
+                                    <%- element.quantity %>
+                            </div>
+                            <div class="product-cell status-cell">
+                                <span class="cell-label">Category:</span>
+                                <span class="status active">
+                                    <%- element.category %>
+                                </span>
+                            </div>
+                            <div class="product-cell stock">
+                                <span class="cell-label">Supplier:</span>
+                                <%- element.supplierName %>
+                            </div>
+                            <div class="product-cell price">
+                                <span class="cell-label">Price:</span> $
+                                <%- element.price %>
+                            </div>
+                            <div class="product-cell sales d-flex justify-content-around">
+                                <span class="cell-label">Action:</span>
+                                <button data-id="<%- element._id  %>" class="btn btn-primary btn_edit"
+                                    data-toggle="modal" data-target="#myModalEdit">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button data-id="<%- element._id  %>" data-image="<%- element.image  %>"
+                                    class="btn btn-danger btn_delete">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <% }) %>
 
                             <!-- Modal Update -->
-                            <div class="modal fade" id="myModalEdit" tabindex="1" role="dialog"
+                            <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog"
                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-
-                                            <h3 class="modal-title " style="font-weight: bolder;color: green;">Cập nhật
-                                                thông tin sản phẩm
+                                            <h3 class="modal-title" style="font-weight: bolder; color: green">
+                                                Cập nhật thông tin thiết bị
                                             </h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div>
                                                 <form enctype="multipart/form-data">
-                                                    <div class="form-floating">
-                                                        <label for="tensanpham">
-                                                            <span style="font-weight: bolder;font-size: large;"> Tên sản
-                                                                phẩm
-                                                            </span>
-                                                        </label>
-                                                        <input type="text" name="nameproduct" class="form-control"
-                                                            id="tensanpham" placeholder="Tên sản phẩm" value="">
-
+                                                    <label for="editName"> Name device: </label>
+                                                    <input type="text" name="editName" class="form-control"
+                                                        placeholder="Chưa có giá trị" id="editName" value="" />
+                                                    <label for="editImage"> Image: </label>
+                                                    <input type="file" name="editImage" class="form-control"
+                                                        placeholder="Chưa có giá trị"
+                                                        onchange=" showPreviewUpdate(event);" id="editImage" value="" />
+                                                    <div class="displayImage">
+                                                        <img id="showImage" src="" alt="">
                                                     </div>
-                                                    <label for="loai" class="form-label">Loại</label>
-                                                    <select class="form-control" id="loai" name="loai" required="">
+                                                    <label for="editQuantity"> Quantity: </label>
+                                                    <input type="number" name="editQuantity" class="form-control"
+                                                        placeholder="Chưa có giá trị" id="editQuantity" value="" />
+
+                                                    <label for=" editCategory" class="form-label">Category:</label>
+                                                    <select class="form-control" id="editCategory" name="editCategory"
+                                                        required="">
                                                         <option value="">Choose...</option>
-                                                        <option>Nam</option>
-                                                        <option>Nữ</option>
+                                                        <option>Phụ kiện</option>
+                                                        <option>Điện tử</option>
                                                     </select>
-                                                    <div class="form-floating mb-3">
-                                                        <label for="hinhanhsanpham">
-                                                            <span style="font-weight: bolder;font-size: large;">Hình ảnh
-                                                                sản
-                                                                phẩm
-                                                            </span>
-                                                        </label>
-                                                        <input type="file" name="image-product" class="form-control"
-                                                            id="hinhanhsanpham" value="">
-                                                    </div>
 
-                                                    <div class="form-floating mb-3">
-                                                        <label for="mota">
-                                                            <span style="font-weight: bolder;font-size: large;">Mô
-                                                                tả</span>
-                                                        </label>
-                                                        <input type="text" name="describe-product" class="form-control"
-                                                            id="mota" placeholder="Mô tả" value="">
-                                                    </div>
+                                                    <label for="editSupplier"> Supplier </label>
+                                                    <input type="text" name="editSupplier" class="form-control"
+                                                        placeholder="Chưa có giá trị" id="editSupplier" value="" />
 
-                                                    <div class="form-floating mb-3">
-                                                        <label for="soluong">
-                                                            <span style="font-weight: bolder;font-size: large;">Số
-                                                                lượng</span>
-                                                        </label>
-                                                        <input type="number" name="soluong-product" class="form-control"
-                                                            id="soluong" value="" placeholder="Số lượng">
-                                                    </div>
-
-                                                    <div class="form-floating mb-3">
-                                                        <label for="gia">
-                                                            <span
-                                                                style="font-weight: bolder;font-size: large;">Giá</span>
-                                                        </label>
-                                                        <input type="number" name="price-product" class="form-control"
-                                                            id="gia" placeholder="Giá" value="">
-
-                                                    </div>
+                                                    <label for="editPrice"> Price </label>
+                                                    <input type="number" name="editPrice" class="form-control"
+                                                        placeholder="Chưa có giá trị" id="editPrice" value="" />
 
                                                     <button type="submit" data-id=""
-                                                        class="w-100 btn btn-lg btn-success" id="btnSave">Cập
-                                                        nhật</button>
+                                                        class="w-100 btn btn-lg btn-success" id="btnSave">
+                                                        Cập nhật
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
 
                                         <div class="footer">
-                                            <p class="mt-1 mb-3 text-muted ml-2 text-center">Copyright &copy; 2021 -
-                                                Design
-                                                by SinhVienIUH
+                                            <p class="mt-1 mb-3 text-muted ml-2 text-center">
+                                                Copyright &copy; 2022 - Design by SinhVienIUH
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal thêm sản phẩm -->
-                            <div class="modal fade" id="myModalAddProduct" tabindex="1" role="dialog"
+                            <!-- Modal thêm device -->
+                            <div class="modal fade" id="myModalAddDevice" tabindex="-1" role="dialog"
                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-
-                                            <h3 class="modal-title " style="font-weight: bolder;color: green;">Thêm sản
-                                                phẩm
+                                            <h3 class="modal-title" aria-labelledby="modelTitleId"
+                                                style="font-weight: bolder; color: green">
+                                                Thêm sản phẩm
                                             </h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div>
-                                                <form action="http://localhost:3000/Storey/add" method="post"
-                                                    enctype="multipart/form-data" class="container-fluid">
-                                                    <label for="" class="form-label">Name:</label>
-                                                    <input class="form-control" type="text" name="txtName" required>
-                                                    <label for="loai" class="form-label">Loại</label>
-                                                    <select class="form-control" id="loai" name="loai" required="">
+                                                <form action="http://localhost:5000/DeviceManager/add-device"
+                                                    method="post" enctype="multipart/form-data" class="container-fluid">
+                                                    <label for="txtNameDevice" class="form-label">Name device:</label>
+                                                    <input class="form-control" type="text" id="txtNameDevice"
+                                                        name="txtNameDevice" required />
+
+                                                    <label for="txtImage" class="form-label">Image device:</label>
+                                                    <input class="form-control" type="file" id="txtImage"
+                                                        name="txtImage" onchange="showPreview(event);" required />
+                                                    <!-- hiển thị hình ảnh khi upload hình -->
+                                                    <div class="displayImage" class="center">
+                                                        <img id="image-preview" src="" alt="">
+                                                    </div>
+                                                    <label for="txtQuantity" class="form-label">Quantity:</label>
+                                                    <input class="form-control" type="number" id="txtQuantity"
+                                                        name="txtQuantity" required />
+
+                                                    <label for="txtCategory" class="form-label">Category:</label>
+                                                    <select class="form-control" id="txtCategory" name="txtCategory"
+                                                        required="">
                                                         <option value="">Choose...</option>
-                                                        <option>Nam</option>
-                                                        <option>Nữ</option>
+                                                        <option>Phụ kiện</option>
+                                                        <option>Điện tử</option>
                                                     </select>
 
-                                                    <label for="" class="form-label">Số lượng:</label>
-                                                    <input class="form-control" type="number" name="txtSoluong"
-                                                        required>
-                                                    <label for="" class="form-label">Image:</label>
-                                                    <input class="form-control" type="file" name="txtFile" required>
-                                                    <label for="" class="form-label">Price:</label>
-                                                    <input class="form-control" type="number" name="txtPrice" required>
-                                                    <label for="" class="form-label">Mo ta:</label>
-                                                    <input class="form-control" type="text" name="txtDescribe" required>
+                                                    <label for="txtSupplier" class="form-label">Supplier: </label>
+                                                    <input class="form-control" type="text" id="txtSupplier"
+                                                        name="txtSupplier" required />
+
+                                                    <label for="txtPrice" class="form-label">Price:</label>
+                                                    <input class="form-control" type="number" id="txtPrice"
+                                                        name="txtPrice" required />
+
                                                     <input type="submit" value="Thêm" id="btnAdd"
-                                                        class=" form-control mt-2 btn btn-light btn-outline-success"
-                                                        required>
+                                                        class="form-control mt-2 btn btn-light btn-outline-success"
+                                                        required />
                                                 </form>
                                             </div>
                                         </div>
 
                                         <div class="footer">
-                                            <p class="mt-1 mb-3 text-muted ml-2 text-center">Copyright &copy; 2021 -
-                                                Design
-                                                by SinhVienIUH
+                                            <p class="mt-1 mb-3 text-muted ml-2 text-center">
+                                                Copyright &copy; 2022 - Design by SinhVienIUH
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                 </div>
-
             </div>
         </div>
     </body>
+
+    <script type="text/javascript">
+        //Hiển thị ảnh ngay khi upload lên
+        function showPreview(event) {
+            if (event.target.files.length > 0) {
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById('image-preview');
+                preview.src = src; // <img src="">
+                preview.style.display = "block"; //  <img style="">
+            }
+        }
+
+        function showPreviewUpdate(event) {
+            if (event.target.files.length > 0) {
+                var src2 = URL.createObjectURL(event.target.files[0]);
+                var preview2 = document.getElementById('showImage');
+                preview2.src = src2; // <img src="">
+                preview2.style.display = "block"; //  <img style="">
+            }
+        }
+    </script>
