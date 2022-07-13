@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const PORT = process.env.PORT || 3000
 
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(process.env.MONGODB_URL||"mongodb+srv://manh123:a123@cluster0.g1g9v.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
         console.error("Error ket noi")
     } else {
@@ -31,7 +31,7 @@ app.use('/DeviceManager', require('./routes/device'))
 
 app.listen(PORT, function (err) {
     if (err) console.log(err);
-    console.log(`Server listening on PORT http://localhost:${PORT}`);
+    console.log(`Server listening on PORT http://localhost:${PORT}/DeviceManager`);
 });
 
 module.exports = app;
